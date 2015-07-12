@@ -1,0 +1,9 @@
+{
+	"name": "variantconfig",
+	"description": "A simple config file format that uses a key = value format",
+	"copyright": "Copyright © 2015, Paul Crane",
+	"authors": ["Paul Crane"],
+	"targetType": "library",
+	"dependencies": {
+	}
+}
