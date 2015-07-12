@@ -1,8 +1,10 @@
 {
 	"name": "variantconfig",
-	"description": "A simple config file format that uses a key = value format",
+	"description": "A key/value config file format",
 	"copyright": "Copyright © 2015, Paul Crane",
 	"authors": ["Paul Crane"],
+	"homepage": "http://github.com/Soulsbane/variantconfig",
+	"license": "BSL-1.0",
 	"targetType": "library",
 	"dependencies": {
 	}
