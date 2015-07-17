@@ -1,35 +1,34 @@
 module variantconfig;
 
-import std.string : lineSplitter, split, strip;
-import std.stdio : File;
+import std.string : lineSplitter, split, strip, indexOf;
+import std.stdio : File, writeln;
 import std.file : exists, readText;
-import std.algorithm : sort;
+import std.algorithm : sort, find;
 import std.traits : isNumeric;
+import std.path : isValidFilename;
 
 public import std.variant;
 
 struct VariantConfig
 {
 private:
-	void load() @safe
+	void load(immutable string fileName) @safe
 	{
-		if(exists(fileName_))
+		string text;
+
+		if(fileName.indexOf("=") == -1)
 		{
-			auto lines = readText(fileName_).lineSplitter();
-
-			foreach(line; lines)
+			if(exists(fileName))
 			{
-				auto fields = split(line, separator_);
-
-				if(fields.length == 2)
-				{
-					string key = strip(fields[0]);
-					Variant value = strip(fields[1]);
-
-					values_[key] = value;
-				}
+				text = readText(fileName);
 			}
 		}
+		else
+		{
+			text = fileName;
+		}
+
+		processText(text);
 	}
 
 	void save() @trusted
@@ -42,11 +41,28 @@ private:
 		}
 	}
 
+	void processText(immutable string text) @safe
+	{
+		auto lines = text.lineSplitter();
+
+		foreach(line; lines)
+		{
+			auto fields = split(line, separator_);
+
+			if(fields.length == 2)
+			{
+				string key = strip(fields[0]);
+				Variant value = strip(fields[1]);
+
+				values_[key] = value;
+			}
+		}
+	}
 public:
 	this(immutable string fileName) @safe
 	{
 		fileName_ = fileName;
-		load();
+		load(fileName);
 	}
 
 	~this() @safe
@@ -96,7 +112,7 @@ public:
 private:
 	immutable char separator_ = '=';
 	Variant[string] values_;
-	immutable string fileName_;
+	immutable string fileName_; // Only used for saving
 }
 
 int toInt(Variant value) @safe
