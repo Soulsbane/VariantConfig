@@ -47,11 +47,11 @@ private:
 
 		foreach(line; lines)
 		{
-			auto fields = split(strip(line), separator_);
+			auto fields = split(line, separator_);
 
 			if(fields.length == 2)
 			{
-				values_[fields[0]] = fields[1];
+				values_[fields[0].strip] = fields[1].strip;
 			}
 		}
 	}
