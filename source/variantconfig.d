@@ -64,7 +64,10 @@ public:
 
 	~this() @safe
 	{
-		save();
+		if(valuesModified_)
+		{
+			save();
+		}
 	}
 
 	bool hasValue(immutable string key) pure @safe
@@ -89,6 +92,7 @@ public:
 	void setValue(immutable string key, Variant value) @safe
 	{
 		values_[key] = value;
+		valuesModified_ = true;
 	}
 
 	bool remove(immutable string key) pure @safe
@@ -110,6 +114,7 @@ private:
 	immutable char separator_ = '=';
 	Variant[string] values_;
 	immutable string fileName_; // Only used for saving
+	bool valuesModified_;
 }
 
 int toInt(Variant value) @safe
