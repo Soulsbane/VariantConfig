@@ -25,7 +25,7 @@ private:
 		}
 		else
 		{
-			text = fileName;
+			text = fileName; // In this case it's a string not a filename.
 		}
 
 		processText(text);
@@ -151,3 +151,26 @@ string toStr(Variant value) @safe // NOTE: Must be named toStr instead of toStri
 	return value.coerce!(string);
 }
 
+unittest
+{
+	string test = "
+		aBool=true
+		float=3443.443
+		number=12071
+		sentence=This is a really long sentence to test for a really long value string!
+		time=12:04
+	";
+
+	auto config = VariantConfig(test);
+	long number = config["number"].toLong;
+	bool aBool = config["aBool"].toBool;
+	string sentence = config["sentence"].toStr;
+	string time = config["time"].toStr;
+	double aDouble = config["aDouble"].toDouble;
+
+	assert(number == 12071);
+	assert(aBool == true);
+	assert(sentence == "This is a really long sentence to test for a really long value string!");
+	assert(time == "12:04");
+	assert(aDouble == 3443.443);
+}
