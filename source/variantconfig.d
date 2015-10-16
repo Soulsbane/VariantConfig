@@ -41,7 +41,7 @@ private:
 		}
 	}
 
-	void processText(immutable string text) @safe
+	void processText(immutable string text) @trusted
 	{
 		auto lines = text.lineSplitter();
 
@@ -79,17 +79,17 @@ public:
 		return false;
 	}
 
-	Variant getValue(immutable string key) @safe
+	Variant getValue(immutable string key) @trusted
 	{
 		return values_.get(key, Variant(0));
 	}
 
-	Variant getValue(immutable string key, Variant defval) @safe
+	Variant getValue(immutable string key, Variant defval) @trusted
 	{
 		return values_.get(key, Variant(defval));
 	}
 
-	void setValue(immutable string key, Variant value) @safe
+	void setValue(immutable string key, Variant value) @trusted
 	{
 		values_[key] = value;
 		valuesModified_ = true;
@@ -117,32 +117,32 @@ private:
 	bool valuesModified_;
 }
 
-int toInt(Variant value) @safe
+int toInt(Variant value) @trusted
 {
 	return value.coerce!(int);
 }
 
-long toLong(Variant value) @safe
+long toLong(Variant value) @trusted
 {
 	return value.coerce!(long);
 }
 
-bool toBool(Variant value) @safe
+bool toBool(Variant value) @trusted
 {
 	return value.coerce!(bool);
 }
 
-double toDouble(Variant value) @safe
+double toDouble(Variant value) @trusted
 {
 	return value.coerce!(double);
 }
 
-real toReal(Variant value) @safe
+real toReal(Variant value) @trusted
 {
 	return value.coerce!(real);
 }
 
-string toStr(Variant value) @safe // NOTE: Must be named toStr instead of toString or D buildin will override.
+string toStr(Variant value) @trusted // NOTE: Must be named toStr instead of toString or D buildin will override.
 {
 	if(value == 0)
 	{
