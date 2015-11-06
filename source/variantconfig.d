@@ -100,12 +100,12 @@ public:
 		return values_.remove(key);
 	}
 
-	Variant opIndex(immutable string key) @safe
+	Variant opIndex(immutable string key) @trusted
 	{
 		return getValue(key);
 	}
 
-	void opIndexAssign(T)(T value, immutable string key) @safe
+	void opIndexAssign(T)(T value, immutable string key) @trusted
 	{
 		setValue(key, Variant(value));
 	}
