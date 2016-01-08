@@ -22,6 +22,10 @@ private:
 			{
 				text = readText(fileName);
 			}
+			else
+			{
+			 	throw new Exception("Specified file was not found.");
+			}
 		}
 		else
 		{
