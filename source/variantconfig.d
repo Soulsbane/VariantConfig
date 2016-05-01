@@ -312,6 +312,7 @@ public:
 	*	Params:
 	*		group = Name of the group the value is stored in.
 	*		key = Name of the key the value is stored in.
+	*		defaultValue = The value to use if group and or key is not found.
 	*
 	*	Returns:
 	*		The value associated with the group and key.
@@ -560,6 +561,7 @@ public:
 	*
 	*	Params:
 	*		key = Name of the key to retrieve.
+	*		defaultValue = The value to use if key isn't found.
 	*
 	*	Returns:
 	*		T = The converted value.

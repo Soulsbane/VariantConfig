@@ -4,8 +4,7 @@ __dummy.html
 *.o
 *.obj
 libvariantconfig.a
-
-
+/docs*
 app.config
 custom-config-format.dat
 __test__library__
