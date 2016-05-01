@@ -298,7 +298,7 @@ public:
 	{
 		if(containsGroup(group))
 		{
-			return getGroupValue(group, key);
+			return getGroupValue(group, key, defaultValue);
 		}
 		else
 		{
@@ -316,10 +316,17 @@ public:
 	*	Returns:
 	*		The value associated with the group and key.
 	*/
-	Variant getGroupValue(const string group, const string key) @trusted
+	Variant getGroupValue(T)(const string group, const string key, const T defaultValue = T.init) @trusted
 	{
-		auto value = values_.filter!(a => (a.group == group) && (a.key == key));//.take(1);
-		return value.front.value;
+		Variant value = defaultValue;
+		auto found = values_.filter!(a => (a.group == group) && (a.key == key));
+
+		if(!found.empty)
+		{
+			value = found.front.value;
+		}
+
+		return value;
 	}
 
 	/**
@@ -380,10 +387,28 @@ public:
 	*/
 	void set(T = string)(const string group, const string key, const T value) @trusted
 	{
-		//writeln("Key: ", key, /*"type: ", typeof(T).stringof, */" valuetype: ", typeof(value).stringof, " acutual value: ", value);
+		//auto foundValue = values_.filter!(a => (a.group == group) && (a.key == key));
+
+		//foundValue.front.value = value.to!T;
+		///valuesModified_ = true;
+
 		auto foundValue = values_.filter!(a => (a.group == group) && (a.key == key));
 
-		foundValue.front.value = value.to!T;
+		if(foundValue.empty)
+		{
+			KeyValueData data;
+
+			data.key = key;
+			data.group = group;
+			data.value = value;
+
+			values_ ~= data;
+		}
+		else
+		{
+			foundValue.front.value = value;
+		}
+
 		valuesModified_ = true;
 	}
 
@@ -544,9 +569,13 @@ public:
 	*	Returns:
 	*		T = The converted value.
 	*/
-	T coerce(T)(const string key) @trusted
+	T coerce(T)(const string key, const T defaultValue = T.init) @trusted
 	{
-		Variant value = get(key);
+		Variant value = defaultValue;
+		if(contains(key))
+		{
+			value = get(key);
+		}
 		return value.coerce!T;
 	}
 
@@ -620,9 +649,9 @@ unittest
 
 	assert(config.contains("time"));
 
-	auto number = config["number"];
+	immutable auto number = config["number"];
 
-	assert(number == 12071);
+	assert(number == 12_071);
 	assert(config["decimal"] == 3443.443);
 
 	assert(config.contains("another.world"));
@@ -637,6 +666,11 @@ unittest
 
 	assert(config["another.japan"] == false);
 
+	// Tests for nonexistent keys
+	assert(config.getString("nonexistent", "Value doesn't exist!") == "Value doesn't exist!");
+	config["nonexistent"] = "The value now exists!!!";
+	assert(config.getString("nonexistent", "The value now exists!!!") == "The value now exists!!!");
+
 	writeln("KeyValueConfig: Testing getGroup...");
 
 	auto group = config.getGroup("another");
@@ -649,9 +683,9 @@ unittest
 	writeln();
 
 	config.set("aBool", false);
-	assert(config["aBool"].coerce!bool == false);
+	assert(config["aBool"] == false);
 	config["aBool"] = true;
-	assert(config["aBool"].coerce!bool == true);
+	assert(config["aBool"] == true);
 	assert(config["aBool"].toString == "true");
 
 	debug config.save();
@@ -663,7 +697,7 @@ unittest
 		This is a really long sentence to test for a really long value string!
 	";
 
-	bool equalSignValue = config.loadString(noEqualSign);
+	immutable bool equalSignValue = config.loadString(noEqualSign);
 	assert(equalSignValue == false);
 
 	string invalidGroup = "
@@ -674,6 +708,6 @@ unittest
 		another=key value is here
 	";
 
-	bool invalidGroupValue = config.loadString(invalidGroup);
+	immutable bool invalidGroupValue = config.loadString(invalidGroup);
 	assert(invalidGroupValue == false);
 }
