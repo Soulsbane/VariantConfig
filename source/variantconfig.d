@@ -387,11 +387,6 @@ public:
 	*/
 	void set(T = string)(const string group, const string key, const T value) @trusted
 	{
-		//auto foundValue = values_.filter!(a => (a.group == group) && (a.key == key));
-
-		//foundValue.front.value = value.to!T;
-		///valuesModified_ = true;
-
 		auto foundValue = values_.filter!(a => (a.group == group) && (a.key == key));
 
 		if(foundValue.empty)
@@ -572,46 +567,46 @@ public:
 	T coerce(T)(const string key, const T defaultValue = T.init) @trusted
 	{
 		Variant value = defaultValue;
+
 		if(contains(key))
 		{
 			value = get(key);
 		}
+
 		return value.coerce!T;
 	}
 
 	/// Gets the value and converts it to a bool.
-	alias getBool = coerce!bool;
+	alias asBool = coerce!bool;
 
 	/// Gets the value and converts it to a int.
-	alias getInt = coerce!int;
+	alias asInt = coerce!int;
 
 	/// Gets the value and converts it to a float.
-	alias getFloat = coerce!float;
+	alias asFloat = coerce!float;
 
 	/// Gets the value and converts it to a real.
-	alias getReal = coerce!real;
+	alias asReal = coerce!real;
 
 	/// Gets the value and converts it to a long.
-	alias getLong = coerce!long;
+	alias asLong = coerce!long;
 
 	/// Gets the value and converts it to a byte.
-	alias getByte = coerce!byte;
+	alias asByte = coerce!byte;
 
 	/// Gets the value and converts it to a short.
-	alias getShort = coerce!short;
+	alias asShort = coerce!short;
 
 	/// Gets the value and converts it to a double.
-	alias getDouble = coerce!double;
+	alias asDouble = coerce!double;
 
 	/// Gets the value and converts it to a string.
-	alias getString = coerce!string;
+	alias asString = coerce!string;
 
 private:
 	KeyValueData[] values_;
 	bool valuesModified_;
 }
-
-alias KeyValueConfig = VariantConfig; //NOTE: Temporary will remove once conversion is complete.
 
 ///
 unittest
@@ -643,7 +638,7 @@ unittest
 	assert(config.containsGroup("section") == false);
 
 	assert(config.get("aBool").coerce!bool == true);
-	assert(config.getBool("aBool")); // Syntactic sugar
+	assert(config.asBool("aBool")); // Syntactic sugar
 	assert(config["aBool"].coerce!bool == true); // Also works but rather awkward
 	assert(config.coerce!bool("aBool") == true); // Also works and more natural
 
@@ -667,9 +662,9 @@ unittest
 	assert(config["another.japan"] == false);
 
 	// Tests for nonexistent keys
-	assert(config.getString("nonexistent", "Value doesn't exist!") == "Value doesn't exist!");
+	assert(config.asString("nonexistent", "Value doesn't exist!") == "Value doesn't exist!");
 	config["nonexistent"] = "The value now exists!!!";
-	assert(config.getString("nonexistent", "The value now exists!!!") == "The value now exists!!!");
+	assert(config.asString("nonexistent", "The value now exists!!!") == "The value now exists!!!");
 
 	writeln("KeyValueConfig: Testing getGroup...");
 
