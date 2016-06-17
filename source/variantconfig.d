@@ -157,14 +157,21 @@ private:
 	}
 
 public:
+	/**
+		Saves config values to the config file used when loading(loadFile).
+	*/
+	void save()
+	{
+		save(saveToFileName_);
+	}
 
 	/**
 	*	Saves config values to the config file.
 	*
 	*	Params:
-	*		fileName = Name of the file which values will be stored. "app.config" by default.
+	*		fileName = Name of the file which values will be stored.
 	*/
-	void save(string fileName = DEFAULT_CONFIG_FILE_NAME) @trusted
+	void save(string fileName) @trusted
 	{
 		if(fileName != string.init && valuesModified_)
 		{
@@ -202,6 +209,8 @@ public:
 	*/
 	bool loadFile(string fileName = DEFAULT_CONFIG_FILE_NAME) @safe
 	{
+		saveToFileName_ = fileName;
+		
 		if(exists(fileName))
 		{
 			return processText(readText(fileName));
@@ -608,6 +617,7 @@ public:
 private:
 	KeyValueData[] values_;
 	bool valuesModified_;
+	string saveToFileName_;
 }
 
 ///
