@@ -7,10 +7,10 @@
 module raijin.keyvalueconfig;
 
 import std.conv : to;
-import std.string : lineSplitter, indexOf, strip, startsWith, endsWith, stripLeft, stripRight;
+import std.string;
 import std.stdio : File, writeln;
 import std.file : exists, readText;
-import std.algorithm : sort, findSplit, filter, canFind, remove;
+import std.algorithm;
 import std.range : take;
 import std.array : empty, array;
 import std.typecons : tuple;
@@ -210,7 +210,7 @@ public:
 	bool loadFile(string fileName = DEFAULT_CONFIG_FILE_NAME) @safe
 	{
 		saveToFileName_ = fileName;
-		
+
 		if(exists(fileName))
 		{
 			return processText(readText(fileName));
