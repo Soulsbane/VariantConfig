@@ -75,7 +75,7 @@ private:
 			else
 			{
 				auto groupAndKey = line.findSplit("=");
-				auto key = groupAndKey[0].stripRight();
+				immutable auto key = groupAndKey[0].stripRight();
 				immutable auto value = groupAndKey[2].stripLeft();
 
 				if(groupAndKey[1].length)
