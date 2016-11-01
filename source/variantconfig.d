@@ -343,6 +343,17 @@ public:
 	auto getGroup(const string group) @trusted
 	{
 		return values_.filter!(a => a.group == group);
+		/*foreach(value; values_)
+		{
+			if(value.group == group)
+			{
+				return value;
+			}
+		}
+
+		KeyValueData data;
+
+		return data;*/
 	}
 
 	/**
@@ -671,7 +682,8 @@ unittest
 
 	foreach(value; group)
 	{
-		writeln(value);
+		assert(value.key == "japan");
+		assert(value.value == false);
 	}
 
 	writeln();
@@ -693,6 +705,16 @@ unittest
 
 	immutable bool equalSignValue = config.loadString(noEqualSign);
 	assert(equalSignValue == false);
+
+	auto groups = config.getGroups();
+
+	writeln("Listing groups: ");
+	writeln;
+
+	foreach(currGroup; groups)
+	{
+		writeln(currGroup);
+	}
 
 	string invalidGroup = "
 		[first]
