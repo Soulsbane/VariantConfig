@@ -1,7 +1,7 @@
 /**
-*	This module manages a config file format in the form of key=value. Much like an ini file but simpler.
-*
-*	Author: Paul Crane
+	This module manages a config file format in the form of key=value. Much like an ini file but simpler.
+
+	Author: Paul Crane
 */
 
 module raijin.keyvalueconfig;
@@ -30,7 +30,7 @@ private struct KeyValueData
 }
 
 /**
-*	Handles the processing of config files.
+	Handles the processing of config files.
 */
 struct VariantConfig
 {
@@ -121,13 +121,13 @@ private:
 	}
 
 	/**
-	*	Determines if the group string is in the form of group.key.
-	*
-	*	Params:
-	*		value = The string to test.
-	*
-	*	Returns:
-	*		true if the string is in the group.key form false otherwise.
+		Determines if the group string is in the form of group.key.
+
+		Params:
+			value = The string to test.
+
+		Returns:
+			true if the string is in the group.key form false otherwise.
 	*/
 	bool isGroupString(const string value) pure @safe
 	{
@@ -139,13 +139,13 @@ private:
 	}
 
 	/**
-	*	Retrieves the group and key from a string in the form of group.key.
-	*
-	*	Params:
-	*		value = The string to process.
-	*
-	*	Returns:
-	*		A tuple containing the group and key.
+		Retrieves the group and key from a string in the form of group.key.
+
+		Params:
+			value = The string to process.
+
+		Returns:
+			A tuple containing the group and key.
 	*/
 	auto getGroupAndKeyFromString(const string value) pure @safe
 	{
@@ -166,10 +166,10 @@ public:
 	}
 
 	/**
-	*	Saves config values to the config file.
-	*
-	*	Params:
-	*		fileName = Name of the file which values will be stored.
+		Saves config values to the config file.
+
+		Params:
+			fileName = Name of the file which values will be stored.
 	*/
 	void save(string fileName) @trusted
 	{
@@ -200,12 +200,12 @@ public:
 	}
 
 	/**
-	*	Loads a config fileName(app.config by default) to be processed.
-	*
-	*	Params:
-	*		fileName = The name of the file to be processed/loaded.
-	*	Returns:
-	*		Returns true on a successful load false otherwise.
+		Loads a config fileName(app.config by default) to be processed.
+
+		Params:
+			fileName = The name of the file to be processed/loaded.
+		Returns:
+			Returns true on a successful load false otherwise.
 	*/
 	bool loadFile(string fileName = DEFAULT_CONFIG_FILE_NAME) @safe
 	{
@@ -222,12 +222,12 @@ public:
 	}
 
 	/**
-	*	Similar to loadFile but loads and processes the passed string instead.
-	*
-	*	Params:
-	*		text = The string to process.
-	*	Returns:
-	*		Returns true on a successful load false otherwise.
+		Similar to loadFile but loads and processes the passed string instead.
+
+		Params:
+			text = The string to process.
+		Returns:
+			Returns true on a successful load false otherwise.
 	*/
 
 	bool loadString(const string text) @safe
@@ -243,14 +243,14 @@ public:
 	}
 
 	/**
-	*	Retrieves the value T associated with key where T is the designated type to be converted to.
-	*
-	*	Params:
-	*		key = Name of the key to get.
-	*
-	*	Returns:
-	*		The value associated with key.
-	*
+		Retrieves the value T associated with key where T is the designated type to be converted to.
+
+		Params:
+			key = Name of the key to get.
+
+		Returns:
+			The value associated with key.
+
 	*/
 	Variant get(const string key) @safe
 	{
@@ -268,15 +268,15 @@ public:
 	}
 
 	/**
-	*	Retrieves the value T associated with key where T is the designated type to be converted to.
-	*
-	*	Params:
-	*		key = Name of the key to get.
-	*		defaultValue = Allow the assignment of a default value if key does not exist.
-	*
-	*	Returns:
-	*		The value associated with key.
-	*
+		Retrieves the value T associated with key where T is the designated type to be converted to.
+
+		Params:
+			key = Name of the key to get.
+			defaultValue = Allow the assignment of a default value if key does not exist.
+
+		Returns:
+			The value associated with key.
+
 	*/
 	Variant get(const string key, string defaultValue) @safe
 	{
@@ -292,16 +292,16 @@ public:
 	}
 
 	/**
-	*	Retrieves the value T associated with key where T is the designated type to be converted to.
-	*
-	*	Params:
-	*		group = Name of the group to retrieve ie portion [groupName] of config file/string.
-	*		key = Name of the key to get.
-	*		defaultValue = Allow the assignment of a default value if key does not exist.
-	*
-	*	Returns:
-	*		The value of value of the key/value pair.
-	*
+		Retrieves the value T associated with key where T is the designated type to be converted to.
+
+		Params:
+			group = Name of the group to retrieve ie portion [groupName] of config file/string.
+			key = Name of the key to get.
+			defaultValue = Allow the assignment of a default value if key does not exist.
+
+		Returns:
+			The value of value of the key/value pair.
+
 	*/
 	Variant get(const string group, const string key, string defaultValue) @trusted
 	{
@@ -316,15 +316,15 @@ public:
 	}
 
 	/**
-	*	Gets the value associated with the group and key.
-	*
-	*	Params:
-	*		group = Name of the group the value is stored in.
-	*		key = Name of the key the value is stored in.
-	*		defaultValue = The value to use if group and or key is not found.
-	*
-	*	Returns:
-	*		The value associated with the group and key.
+		Gets the value associated with the group and key.
+
+		Params:
+			group = Name of the group the value is stored in.
+			key = Name of the key the value is stored in.
+			defaultValue = The value to use if group and or key is not found.
+
+		Returns:
+			The value associated with the group and key.
 	*/
 	Variant getGroupValue(T)(const string group, const string key, const T defaultValue = T.init) @trusted
 	{
@@ -340,14 +340,14 @@ public:
 	}
 
 	/**
-	*	Retrieves key/values associated with the group portion of a config file/string.
-	*
-	*	Params:
-	*		group = Name of the the group to retrieve.
-	*
-	*	Returns:
-	*		Returns an array containing all the key/values associated with group.
-	*
+		Retrieves key/values associated with the group portion of a config file/string.
+
+		Params:
+			group = Name of the the group to retrieve.
+
+		Returns:
+			Returns an array containing all the key/values associated with group.
+
 	*/
 	auto getGroup(const string group) @trusted
 	{
@@ -355,10 +355,10 @@ public:
 	}
 
 	/**
-	*	Retrieves an array containing key/values of all groups in the configfile omitting groupless key/values.
-	*
-	*	Returns:
-	*		An array containing every group.
+		Retrieves an array containing key/values of all groups in the configfile omitting groupless key/values.
+
+		Returns:
+			An array containing every group.
 	*/
 	auto getGroups()
 	{
@@ -366,11 +366,11 @@ public:
 	}
 
 	/**
-	*	Sets a config value.
-	*
-	*	Params:
-	*		key = Name of the key to set. Can be in the group.key form.
-	*		value = The value to be set to.
+		Sets a config value.
+
+		Params:
+			key = Name of the key to set. Can be in the group.key form.
+			value = The value to be set to.
 	*/
 	void set(T)(const string key, const T value) @trusted
 	{
@@ -388,12 +388,12 @@ public:
 	}
 
 	/**
-	*	Sets a config value.
-	*
-	*	Params:
-	*		group = Name of the group key belongs to.
-	*		key = Name of the key to set.
-	*		value = The value to be set to.
+		Sets a config value.
+
+		Params:
+			group = Name of the group key belongs to.
+			key = Name of the key to set.
+			value = The value to be set to.
 	*/
 	void set(T = string)(const string group, const string key, const T value) @trusted
 	{
@@ -418,14 +418,14 @@ public:
 	}
 
 	/**
-	*	Determines if the key is found in the config file.
-	*	The key can be either its name of in the format of groupName.keyName or just the key name.
-	*
-	*	Params:
-	*		key = Name of the key to get the value of
-	*
-	*	Returns:
-	*		true if the config file contains the key false otherwise.
+		Determines if the key is found in the config file.
+		The key can be either its name of in the format of groupName.keyName or just the key name.
+
+		Params:
+			key = Name of the key to get the value of
+
+		Returns:
+			true if the config file contains the key false otherwise.
 	*/
 	bool contains(const string key) @trusted
 	{
@@ -441,14 +441,14 @@ public:
 	}
 
 	/**
-	*	Determines if the key is found in the config file.
-	*
-	*	Params:
-	*		group = Name of the group to get entries from.
-	*		key = Name of the key to get the value from.
-	*
-	*	Returns:
-	*		true if the config file contains the key false otherwise.
+		Determines if the key is found in the config file.
+
+		Params:
+			group = Name of the group to get entries from.
+			key = Name of the key to get the value from.
+
+		Returns:
+			true if the config file contains the key false otherwise.
 	*/
 	bool contains(const string group, const string key) @trusted
 	{
@@ -464,13 +464,13 @@ public:
 	}
 
 	/**
-	*	Determines if the given group exists.
-	*
-	*	Params:
-	*		group = Name of the group to check for.
-	*
-	*	Returns:
-	*		true if the group exists false otherwise.
+		Determines if the given group exists.
+
+		Params:
+			group = Name of the group to check for.
+
+		Returns:
+			true if the group exists false otherwise.
 	*/
 	bool containsGroup(const string group) @trusted
 	{
@@ -478,14 +478,14 @@ public:
 	}
 
 	/**
-	*	Removes a key/value from config file.
-	*	The key can be either its name of in the format of groupName.keyName or just the keyName.
-	*
-	*	Params:
-	*		key = Name of the key to remove. Can be in the group.name format.
-	*
-	*	Returns:
-	*		true if it was successfully removed false otherwise.
+		Removes a key/value from config file.
+		The key can be either its name of in the format of groupName.keyName or just the keyName.
+
+		Params:
+			key = Name of the key to remove. Can be in the group.name format.
+
+		Returns:
+			true if it was successfully removed false otherwise.
 	*/
 	bool remove(const string key) @trusted
 	{
@@ -504,15 +504,15 @@ public:
 	}
 
 	/**
-	*	Removes a key/value from config file.
-	*	The key can be either its name of in the format of group.keyor just the key.
-	*
-	*	Params:
-	*		group = Name of the group where key is found.
-	*		key = Name of the key to remove.
-	*
-	*	Returns:
-	*		true if it was successfully removed false otherwise.
+		Removes a key/value from config file.
+		The key can be either its name of in the format of group.keyor just the key.
+
+		Params:
+			group = Name of the group where key is found.
+			key = Name of the key to remove.
+
+		Returns:
+			true if it was successfully removed false otherwise.
 	*/
 	bool remove(const string group, const string key) @trusted
 	{
@@ -523,13 +523,13 @@ public:
 	}
 
 	/**
-	*	Removes a group from the config file.
-	*
-	*	Params:
-	*		group = Name of the group to remove.
-	*
-	*	Returns:
-	*		true if group was successfully removed false otherwise.
+		Removes a group from the config file.
+
+		Params:
+			group = Name of the group to remove.
+
+		Returns:
+			true if group was successfully removed false otherwise.
 	*/
 	bool removeGroup(const string group) @trusted
 	{
@@ -540,13 +540,13 @@ public:
 	}
 
 	/**
-	*	Allows config values to be accessed as you would with an associative array.
-	*
-	*	Params:
-	*		key = Name of the value to retrieve
-	*
-	*	Returns:
-	*		The string value associated with the key.
+		Allows config values to be accessed as you would with an associative array.
+
+		Params:
+			key = Name of the value to retrieve
+
+		Returns:
+			The string value associated with the key.
 	*/
 	Variant opIndex(const string key) @trusted
 	{
@@ -554,11 +554,11 @@ public:
 	}
 
 	/**
-	*	Allows config values to be assigned as you would with an associative array.
-	*
-	*	Params:
-	*		key = Name of the key to assign the value to.
-	*		value = The value in which key should be assigned to.
+		Allows config values to be assigned as you would with an associative array.
+
+		Params:
+			key = Name of the key to assign the value to.
+			value = The value in which key should be assigned to.
 	*/
 	void opIndexAssign(T)(T value, const string key) @trusted
 	{
@@ -566,14 +566,14 @@ public:
 	}
 
 	/**
-	*	Converts the value of key to type of T. Works the same as std.variant's coerce.
-	*
-	*	Params:
-	*		key = Name of the key to retrieve.
-	*		defaultValue = The value to use if key isn't found.
-	*
-	*	Returns:
-	*		T = The converted value.
+		Converts the value of key to type of T. Works the same as std.variant's coerce.
+
+		Params:
+			key = Name of the key to retrieve.
+			defaultValue = The value to use if key isn't found.
+
+		Returns:
+			T = The converted value.
 	*/
 	T coerce(T)(const string key, const T defaultValue = T.init) @trusted
 	{
