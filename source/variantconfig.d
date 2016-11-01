@@ -249,7 +249,7 @@ public:
 			The value associated with key.
 
 	*/
-	Variant get(const string key) @safe
+	/*Variant get(const string key) @safe
 	{
 		string defaultValue;
 
@@ -260,7 +260,7 @@ public:
 		}
 
 		return get(DEFAULT_GROUP_NAME, key, defaultValue);
-	}
+	}*/
 
 	/**
 		Retrieves the value T associated with key where T is the designated type to be converted to.
@@ -273,7 +273,7 @@ public:
 			The value associated with key.
 
 	*/
-	Variant get(const string key, string defaultValue) @safe
+	Variant get(T)(const string key, T defaultValue) @trusted
 	{
 		if(isGroupString(key))
 		{
@@ -296,7 +296,7 @@ public:
 			The value of value of the key/value pair.
 
 	*/
-	Variant get(const string group, const string key, string defaultValue) @trusted
+	Variant get(T)(const string group, const string key, T defaultValue) @trusted
 	{
 		if(containsGroup(group))
 		{
@@ -548,7 +548,9 @@ public:
 	*/
 	Variant opIndex(const string key) @trusted
 	{
-		return get(key);
+		Variant defaultValue;
+
+		return get(key, defaultValue);
 	}
 
 	/**
@@ -573,13 +575,13 @@ public:
 		Returns:
 			T = The converted value.
 	*/
-	T coerce(T)(const string key, const T defaultValue = T.init) @trusted
+	T coerce(T = string)(const string key, const T defaultValue = T.init) @trusted
 	{
 		Variant value = defaultValue;
 
 		if(contains(key))
 		{
-			value = get(key);
+			value = get(key, defaultValue);
 		}
 
 		return value.coerce!T;
@@ -647,7 +649,7 @@ unittest
 	config.removeGroup("section");
 	assert(config.containsGroup("section") == false);
 
-	assert(config.get("aBool").coerce!bool == true);
+	assert(config.get("aBool", true).coerce!bool == true);
 	assert(config.asBool("aBool")); // Syntactic sugar
 	assert(config["aBool"].coerce!bool == true); // Also works but rather awkward
 	assert(config.coerce!bool("aBool") == true); // Also works and more natural
@@ -676,8 +678,6 @@ unittest
 	config["nonexistent"] = "The value now exists!!!";
 	assert(config.asString("nonexistent", "The value now exists!!!") == "The value now exists!!!");
 
-	writeln("KeyValueConfig: Testing getGroup...");
-
 	auto group = config.getGroup("another");
 
 	foreach(value; group)
@@ -685,8 +685,6 @@ unittest
 		assert(value.key == "japan");
 		assert(value.value == false);
 	}
-
-	writeln();
 
 	config.set("aBool", false);
 	assert(config["aBool"] == false);
