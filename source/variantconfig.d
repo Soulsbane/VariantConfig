@@ -161,7 +161,7 @@ public:
 	/**
 		Saves config values to the config file used when loading(loadFile).
 	*/
-	void save()
+	void save() @trusted
 	{
 		save(saveToFileName_);
 	}
@@ -351,7 +351,7 @@ public:
 		Returns:
 			An array containing every group.
 	*/
-	auto getGroups()
+	auto getGroups() @trusted
 	{
 		return values_.filter!(a => a.group != "");
 	}
@@ -418,7 +418,7 @@ public:
 		Returns:
 			true if the config file contains the key false otherwise.
 	*/
-	bool contains(const string key) @trusted
+	bool contains(const string key) @safe
 	{
 		if(isGroupString(key))
 		{
