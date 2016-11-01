@@ -135,6 +135,7 @@ private:
 		{
 			return false;
 		}
+
 		return true;
 	}
 
@@ -215,10 +216,8 @@ public:
 		{
 			return processText(readText(fileName));
 		}
-		else
-		{
-			return false;
-		}
+
+		return false;
 	}
 
 	/**
@@ -236,10 +235,8 @@ public:
 		{
 			return processText(text);
 		}
-		else
-		{
-			return false;
-		}
+
+		return false;
 	}
 
 	/**
@@ -261,10 +258,8 @@ public:
 			auto groupAndKey = getGroupAndKeyFromString(key);
 			return get(groupAndKey.group, groupAndKey.key, defaultValue);
 		}
-		else
-		{
-			return get(DEFAULT_GROUP_NAME, key, defaultValue);
-		}
+
+		return get(DEFAULT_GROUP_NAME, key, defaultValue);
 	}
 
 	/**
@@ -285,10 +280,8 @@ public:
 			auto groupAndKey = getGroupAndKeyFromString(key);
 			return get(groupAndKey.group, groupAndKey.key, defaultValue);
 		}
-		else
-		{
-			return get(DEFAULT_GROUP_NAME, key, defaultValue);
-		}
+
+		return get(DEFAULT_GROUP_NAME, key, defaultValue);
 	}
 
 	/**
@@ -309,10 +302,8 @@ public:
 		{
 			return getGroupValue(group, key, defaultValue);
 		}
-		else
-		{
-			return Variant(defaultValue);
-		}
+
+		return Variant(defaultValue);
 	}
 
 	/**
@@ -434,10 +425,8 @@ public:
 			auto groupAndKey = getGroupAndKeyFromString(key);
 			return contains(groupAndKey.group, groupAndKey.key);
 		}
-		else
-		{
-			return contains(DEFAULT_GROUP_NAME, key);
-		}
+
+		return contains(DEFAULT_GROUP_NAME, key);
 	}
 
 	/**
@@ -457,10 +446,8 @@ public:
 			auto groupValues = getGroup(group);
 			return groupValues.canFind!(a => a.key == key);
 		}
-		else
-		{
-			return false; // The group wasn't found so no point in checking for a group and value.
-		}
+
+		return false; // The group wasn't found so no point in checking for a group and value.
 	}
 
 	/**
