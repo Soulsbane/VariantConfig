@@ -174,7 +174,7 @@ public:
 	*/
 	void save(string fileName) @trusted
 	{
-		if(fileName != string.init && valuesModified_)
+		if(fileName.length && valuesModified_)
 		{
 			auto configfile = File(fileName, "w+");
 			string curGroup;
