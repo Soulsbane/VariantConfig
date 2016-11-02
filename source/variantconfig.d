@@ -244,29 +244,6 @@ public:
 
 		Params:
 			key = Name of the key to get.
-
-		Returns:
-			The value associated with key.
-
-	*/
-	/*Variant get(const string key) @safe
-	{
-		string defaultValue;
-
-		if(isGroupString(key))
-		{
-			auto groupAndKey = getGroupAndKeyFromString(key);
-			return get(groupAndKey.group, groupAndKey.key, defaultValue);
-		}
-
-		return get(DEFAULT_GROUP_NAME, key, defaultValue);
-	}*/
-
-	/**
-		Retrieves the value T associated with key where T is the designated type to be converted to.
-
-		Params:
-			key = Name of the key to get.
 			defaultValue = Allow the assignment of a default value if key does not exist.
 
 		Returns:
@@ -343,17 +320,6 @@ public:
 	auto getGroup(const string group) @trusted
 	{
 		return values_.filter!(a => a.group == group);
-		/*foreach(value; values_)
-		{
-			if(value.group == group)
-			{
-				return value;
-			}
-		}
-
-		KeyValueData data;
-
-		return data;*/
 	}
 
 	/**
@@ -364,7 +330,7 @@ public:
 	*/
 	auto getGroups() @trusted
 	{
-		return values_.filter!(a => a.group != "");
+		return values_.filter!(a => a.group != DEFAULT_GROUP_NAME);
 	}
 
 	/**
@@ -645,6 +611,15 @@ unittest
 	immutable bool loaded = config.loadString(text);
 	assert(loaded, "Failed to load string!");
 
+	auto groups = config.getGroups();
+
+	writeln("Listing groups: ");
+
+	foreach(currGroup; groups)
+	{
+		writeln(currGroup);
+	}
+
 	assert(config.containsGroup("section"));
 	config.removeGroup("section");
 	assert(config.containsGroup("section") == false);
@@ -703,16 +678,6 @@ unittest
 
 	immutable bool equalSignValue = config.loadString(noEqualSign);
 	assert(equalSignValue == false);
-
-	auto groups = config.getGroups();
-
-	writeln("Listing groups: ");
-	writeln;
-
-	foreach(currGroup; groups)
-	{
-		writeln(currGroup);
-	}
 
 	string invalidGroup = "
 		[first]
