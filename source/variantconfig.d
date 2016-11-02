@@ -151,8 +151,8 @@ private:
 	auto getGroupAndKeyFromString(const string value) pure @safe
 	{
 		auto groupAndKey = value.findSplit(".");
-		auto group = groupAndKey[0].strip();
-		auto key = groupAndKey[2].strip();
+		immutable auto group = groupAndKey[0].strip();
+		immutable auto key = groupAndKey[2].strip();
 
 		return tuple!("group", "key")(group, key);
 	}
@@ -277,7 +277,7 @@ public:
 	{
 		if(isGroupString(key))
 		{
-			auto groupAndKey = getGroupAndKeyFromString(key);
+			immutable auto groupAndKey = getGroupAndKeyFromString(key);
 			return get(groupAndKey.group, groupAndKey.key, defaultValue);
 		}
 
@@ -367,8 +367,8 @@ public:
 	{
 		if(isGroupString(key))
 		{
-			auto groupAndKey = getGroupAndKeyFromString(key);
-			auto group = groupAndKey.group;
+			immutable auto groupAndKey = getGroupAndKeyFromString(key);
+			immutable auto group = groupAndKey.group;
 
 			set(group, key, value);
 		}
@@ -422,7 +422,7 @@ public:
 	{
 		if(isGroupString(key))
 		{
-			auto groupAndKey = getGroupAndKeyFromString(key);
+			immutable auto groupAndKey = getGroupAndKeyFromString(key);
 			return contains(groupAndKey.group, groupAndKey.key);
 		}
 
@@ -478,7 +478,7 @@ public:
 	{
 		if(isGroupString(key))
 		{
-			auto groupAndKey = getGroupAndKeyFromString(key);
+			immutable auto groupAndKey = getGroupAndKeyFromString(key);
 
 			valuesModified_ = true;
 			return remove(groupAndKey.group, groupAndKey.key);
