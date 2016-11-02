@@ -184,6 +184,7 @@ public:
 				if(curGroup != data.group)
 				{
 					curGroup = data.group;
+
 					if(curGroup != DEFAULT_GROUP_NAME)
 					{
 						configfile.writeln("[", curGroup, "]");
