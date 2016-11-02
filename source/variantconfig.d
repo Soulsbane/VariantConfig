@@ -343,17 +343,6 @@ public:
 	auto getGroup(const string group) @trusted
 	{
 		return values_.filter!(a => a.group == group);
-		/*foreach(value; values_)
-		{
-			if(value.group == group)
-			{
-				return value;
-			}
-		}
-
-		KeyValueData data;
-
-		return data;*/
 	}
 
 	/**
