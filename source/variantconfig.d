@@ -363,7 +363,7 @@ public:
 			key = Name of the key to set.
 			value = The value to be set to.
 	*/
-	void set(T = string)(const string group, const string key, const T value) @trusted
+	void set(T)(const string group, const string key, const T value) @trusted
 	{
 		auto foundValue = values_.filter!(a => (a.group == group) && (a.key == key));
 
