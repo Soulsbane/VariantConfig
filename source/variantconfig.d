@@ -244,29 +244,6 @@ public:
 
 		Params:
 			key = Name of the key to get.
-
-		Returns:
-			The value associated with key.
-
-	*/
-	/*Variant get(const string key) @safe
-	{
-		string defaultValue;
-
-		if(isGroupString(key))
-		{
-			auto groupAndKey = getGroupAndKeyFromString(key);
-			return get(groupAndKey.group, groupAndKey.key, defaultValue);
-		}
-
-		return get(DEFAULT_GROUP_NAME, key, defaultValue);
-	}*/
-
-	/**
-		Retrieves the value T associated with key where T is the designated type to be converted to.
-
-		Params:
-			key = Name of the key to get.
 			defaultValue = Allow the assignment of a default value if key does not exist.
 
 		Returns:
