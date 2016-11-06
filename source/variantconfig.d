@@ -37,10 +37,10 @@ struct VariantConfig
 private:
 
 	/**
-	*	Processes the text found in config file into an array of KeyValueData structures.
-	*
-	*	Params:
-	*		text = The text to be processed.
+		Processes the text found in config file into an array of KeyValueData structures.
+
+		Params:
+			text = The text to be processed.
 	*/
 	bool processText(const string text) @trusted
 	{
