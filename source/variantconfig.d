@@ -179,7 +179,7 @@ public:
 			auto configfile = File(fileName, "w+");
 			string curGroup;
 
-			foreach(key, data; values_)
+			foreach(data; values_)
 			{
 				if(curGroup != data.group)
 				{
@@ -209,7 +209,7 @@ public:
 		Returns:
 			Returns true on a successful load false otherwise.
 	*/
-	bool loadFile(string fileName = DEFAULT_CONFIG_FILE_NAME) @safe
+	bool loadFile(string fileName) @safe
 	{
 		saveToFileName_ = fileName;
 
@@ -584,7 +584,7 @@ public:
 private:
 	KeyValueData[] values_;
 	bool valuesModified_;
-	string saveToFileName_;
+	string saveToFileName_ = DEFAULT_CONFIG_FILE_NAME;
 }
 
 ///
@@ -655,11 +655,12 @@ unittest
 
 	config.set("aBool", false);
 	assert(config["aBool"] == false);
+	debug config.save();
+
 	config["aBool"] = true;
 	assert(config["aBool"] == true);
 	assert(config["aBool"].toString == "true");
 
-	debug config.save();
 	debug config.save("custom-config-format.dat");
 
 	string noEqualSign = "
