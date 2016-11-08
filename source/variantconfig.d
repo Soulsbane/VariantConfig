@@ -579,6 +579,9 @@ public:
 	/// Gets the value and converts it to a string.
 	alias asString = coerce!string;
 
+	/// Simpler alias that conveys the meaning more appropriately.
+	alias as = coerce;
+
 private:
 	KeyValueData[] values_;
 	bool valuesModified_;
