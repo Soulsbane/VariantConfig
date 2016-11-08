@@ -667,7 +667,16 @@ unittest
 
 	assert(config.get!int("numberGroup", "numberValue", 1234) == 1234);
 
-	debug config.save("custom-config-format.dat");
+	immutable string customFileName = "custom-config-format.dat";
+	debug config.save(customFileName);
+
+	VariantConfig configLoadTest;
+
+	bool isLoadedTest = configLoadTest.loadFile("doesnt-exist.dat");
+	assert(isLoadedTest == false);
+
+	isLoadedTest = configLoadTest.loadFile(customFileName);
+	assert(isLoadedTest == true);
 
 	string noEqualSign = "
 		equal=sign
