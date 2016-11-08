@@ -665,6 +665,8 @@ unittest
 	assert(config["aBool"] == true);
 	assert(config["aBool"].toString == "true");
 
+	assert(config.get!int("numberGroup", "numberValue", 1234) == 1234);
+
 	debug config.save("custom-config-format.dat");
 
 	string noEqualSign = "
@@ -696,4 +698,9 @@ unittest
 
 	immutable bool invalidGroupValue = config.loadString(invalidGroup);
 	assert(invalidGroupValue == false);
+
+	string emptyString;
+
+	immutable bool emptyLoad = config.loadString(emptyString);
+	assert(emptyLoad == false);
 }
