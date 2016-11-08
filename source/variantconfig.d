@@ -346,9 +346,7 @@ public:
 		if(isGroupString(key))
 		{
 			immutable auto groupAndKey = getGroupAndKeyFromString(key);
-			immutable auto group = groupAndKey.group;
-
-			set(group, key, value);
+			set(groupAndKey.group, groupAndKey.key, value);
 		}
 		else
 		{
@@ -630,15 +628,18 @@ unittest
 
 	assert(config.contains("another.world"));
 	assert(config["another.world"] == "hello");
+
+	config["another.japan"] = true;
+	assert(config["another.japan"] == true);
+
 	config.remove("another.world");
+
 	assert(config.contains("another.world") == false);
 	assert(config.contains("anothers", "world") == false);
 
 	assert(config.contains("number"));
 	config.remove("number");
 	assert(config.contains("number") == false);
-
-	assert(config["another.japan"] == false);
 
 	// Tests for nonexistent keys
 	assert(config.asString("nonexistent", "Value doesn't exist!") == "Value doesn't exist!");
@@ -650,7 +651,7 @@ unittest
 	foreach(value; group)
 	{
 		assert(value.key == "japan");
-		assert(value.value == false);
+		assert(value.value == true);
 	}
 
 	config.set("aBool", false);
