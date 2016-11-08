@@ -4,7 +4,7 @@
 	Author: Paul Crane
 */
 
-module raijin.keyvalueconfig;
+module variantconfig;
 
 import std.conv : to;
 import std.string;
