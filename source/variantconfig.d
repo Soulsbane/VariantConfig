@@ -213,9 +213,9 @@ public:
 	{
 		saveToFileName_ = fileName;
 
-		if(exists(fileName))
+		if(fileName.exists)
 		{
-			return processText(readText(fileName));
+			return processText(fileName.readText);
 		}
 
 		return false;
