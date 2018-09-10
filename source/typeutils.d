@@ -10,6 +10,7 @@ module typeutils;
 import std.typecons;
 import std.traits;
 import std.conv;
+import std.algorithm : count;
 
 alias AllowNumericBooleanValues = Flag!"allowNumericBooleanValues";
 
@@ -138,8 +139,8 @@ unittest
 */
 bool isDecimal(const string value) pure @safe
 {
-	import std.string : isNumeric, countchars;
-	return (isNumeric(value) && value.countchars(".") == 1) ? true : false;
+	import std.string : isNumeric;
+	return (isNumeric(value) && value.count(".") == 1) ? true : false;
 }
 
 ///
@@ -160,8 +161,8 @@ unittest
 */
 bool isInteger(const string value) pure @safe
 {
-	import std.string : isNumeric, countchars;
-	return (isNumeric(value) && value.countchars(".") == 0) ? true : false;
+	import std.string : isNumeric;
+	return (isNumeric(value) && value.count(".") == 0) ? true : false;
 }
 
 ///
