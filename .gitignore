@@ -8,3 +8,4 @@ libvariantconfig.a
 app.config
 custom-config-format.dat
 __test__library__
+variantconfig-test-library
