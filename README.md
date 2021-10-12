@@ -1,3 +1,6 @@
+# DEPRECATED
+I don't use D much nowadays and as such making this project deprecated.
+
 # Description
 VariantConfig is a key/value config file format that uses an associative array to store key/value pairs.
 
